@@ -10,6 +10,7 @@ mongoose.connect(config.DB_URI, { useNewUrlParser: true })
         fakeDb.seedDb(); 
     });
 
+
 const app = express();
 app.use('/api/v1/rentals', rentalsRoutes);
 
