@@ -27,6 +27,7 @@ export class RentalDetailComponent implements OnInit {
   getRental(rentalId: string) {
     this.rentalService.getRentalById(rentalId).subscribe(
       (rental: Rental) => {
+        console.log(rental);
         this.rental = rental;
         this.location = this.rental.city + ', ' + this.rental.street;
       }

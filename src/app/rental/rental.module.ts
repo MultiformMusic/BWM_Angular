@@ -13,6 +13,9 @@ import { MapModule } from '../common/map/map.module';
 import { AuthGuard } from '../auth/shared/auth.guard';
 import { Daterangepicker } from 'ng2-daterangepicker';
 import { RentalDetailBookingComponent } from './rental-detail/rental-detail-booking/rental-detail-booking.component';
+import { HelperService } from '../common/service/helper.service';
+import { FormsModule } from '@angular/forms';
+import { BookingService } from '../booking/shared/booking.service';
 
 const routes: Routes = [
     { path: 'rentals', 
@@ -41,9 +44,10 @@ const routes: Routes = [
         NgPipesModule,
         MapModule,
         Daterangepicker,
+        FormsModule,
         RouterModule.forChild(routes)
     ],
-    providers: [RentalService]
+    providers: [RentalService, HelperService, BookingService]
 })
 export class RentalModule {
 
