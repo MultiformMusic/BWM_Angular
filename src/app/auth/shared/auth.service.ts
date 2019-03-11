@@ -22,8 +22,6 @@ export class AuthService {
 
     private saveToken(token: string): string {
 
-        debugger;
-
         this.decodedToken = jwt.decode(token);
         localStorage.setItem('bwm_auth', token);
         localStorage.setItem('bwm_meta', JSON.stringify(this.decodedToken));
