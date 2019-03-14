@@ -44,6 +44,5 @@ testem.log
 Thumbs.db
 
 /server/config/dev.js
-/src/app/common/config/constants.ts
 
 .vscode
