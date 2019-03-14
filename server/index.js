@@ -1,16 +1,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const config = require('./config/dev');
+const config = require('./config');
 const FakeDb = require('./fake-db');
 const rentalsRoutes = require('./routes/rentals');
 const userRoutes = require('./routes/users');
 const bookingRoutes = require('./routes/booking');
 
+const path = require('path');
+
 mongoose.connect(config.DB_URI, { useNewUrlParser: true })
     .then(() => {
-        const fakeDb = new FakeDb();
-        //fakeDb.seedDb(); 
+
+        /** config pour dev **/
+        if (process.env.NODE_ENV !== 'production') {
+            const fakeDb = new FakeDb();
+            //fakeDb.seedDb(); 
+        }
     });
 
 
@@ -19,6 +25,16 @@ app.use(bodyParser.json());
 app.use('/api/v1/rentals', rentalsRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/bookings', bookingRoutes);
+
+/** config pour prod : servir l'appli depuis dist **/
+if (process.env.NODE_ENV === 'production') {
+    const appPath = path.join(__dirname, '..', 'dist');
+    app.use(express.static(appPath));
+    app.get('*', function(req, res) {
+        res.sendFile(path.resolve(appPath, 'index.html'));
+    });
+}
+
 
 const PORT = process.env.PORT || 3001;
 
