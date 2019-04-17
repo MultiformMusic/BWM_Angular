@@ -104,6 +104,39 @@ exports.authMiddleWare = function(req, res, next) {
     }
 }
 
+exports.getUser = function(req, res) {
+ 
+    const requestedUserid = req.params.id;
+    const user = res.locals.user;
+
+    if (requestedUserid === user.id) {
+
+        User.findById(requestedUserid, function(err, foundUser) {
+
+            if (err) {
+                return res.status(422).send({errors: normalizeErrors(err.errors)});
+            }
+            
+            return res.json(foundUser);
+
+        });
+        
+    } else {
+
+        User.findById(requestedUserid)
+            .select('-revenue -stripeCustomerId -password')
+            .exec(function(err, foundUser) {
+
+                if (err) {
+                    return res.status(422).send({errors: normalizeErrors(err.errors)});
+                }
+                
+                return res.json(foundUser);
+
+            });
+    }
+}
+
 function parseToken(token) {
 
     return jwt.verify(token.split(' ')[1], config.SECRET);

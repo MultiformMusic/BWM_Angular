@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BookingService } from '../../booking/shared/booking.service';
 import { Booking } from '../../booking/shared/booking.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PaymentService } from '../../payment/shared/payment.service';
 
 @Component({
   selector: 'bwm-manage-booking',
@@ -11,8 +12,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ManageBookingComponent implements OnInit {
 
   bookings: Booking[];
+  payments: any[];
 
-  constructor(private bookingService: BookingService) { }
+  constructor(private bookingService: BookingService,
+              private paymentService: PaymentService) { }
 
   ngOnInit() {
 
@@ -25,6 +28,43 @@ export class ManageBookingComponent implements OnInit {
       }
     );
 
+    this.getPendingPayments();
+
+  }
+
+  getPendingPayments() {
+    this.paymentService.getPendingPayments().subscribe(
+      (payments: any) => {
+        console.log(payments);
+        this.payments = payments;
+      },
+      (errors) => {
+      }
+    );
+  }
+
+
+  acceptPayment(payment) {
+    this.paymentService.acceptPayment(payment).subscribe(
+      (json) => {
+        payment.status = 'paid';
+      },
+      (error) => {
+        
+      }
+    );
+  }
+
+  declinePayment(payment) {
+    this.paymentService.declinePayment(payment).subscribe(
+      (json) => {
+        debugger;
+        payment.status = 'declined';
+      },
+      (error) => {
+        
+      }
+    );
   }
 
 }
