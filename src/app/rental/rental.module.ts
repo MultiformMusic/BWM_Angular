@@ -18,6 +18,7 @@ import { HelperService } from '../common/service/helper.service';
 import { FormsModule } from '@angular/forms';
 import { BookingService } from '../booking/shared/booking.service';
 import { RentalCreateComponent } from './rental-create/rental-create.component';
+import { PaymentModule } from '../payment/payment.module';
 
 const routes: Routes = [
     { path: 'rentals', 
@@ -51,6 +52,7 @@ const routes: Routes = [
         MapModule,
         Daterangepicker,
         FormsModule,
+        PaymentModule,
         RouterModule.forChild(routes)
     ],
     providers: [RentalService, HelperService, BookingService]

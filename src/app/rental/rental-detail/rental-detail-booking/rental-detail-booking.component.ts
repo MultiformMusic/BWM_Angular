@@ -118,4 +118,9 @@ export class RentalDetailBookingComponent implements OnInit, OnChanges {
       this.newBooking.days = -(value.start.diff(value.end, 'days'));
       this.newBooking.totalPrice = this.newBooking.days * this.rental.dailyRate;
   }
+
+  onPaymentConfirmed(paymentToken: any) {
+    debugger;
+    this.newBooking.paymentToken = paymentToken;
+  }
 }

@@ -9,6 +9,7 @@ import 'rxjs/Rx';
 class DecodedToken {
     exp: number = 0;
     username: string = '';
+    userId: string = '';
 }
 
 @Injectable()
@@ -62,5 +63,9 @@ export class AuthService {
 
     public getUserName(): string {
         return this.decodedToken.username;
+    }
+
+    public getUserId(): string {
+        return this.decodedToken.userId;
     }
 }
